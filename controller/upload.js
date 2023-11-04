@@ -50,6 +50,21 @@ async function uploadFile(key, files, DriveFolderID) {
             resource: fileMetadata,
             media: media,
             fields: 'id',
+            // Adding the resumable option to track upload progress
+            media: {
+                body: fs.createReadStream(filePath),
+                resumable: true,
+            },
+        });
+
+        // Track progress using the 'progress' event
+        let progress = 0;
+        const fileSize = fs.statSync(filePath).size;
+
+        media.body.on('data', (chunk) => {
+            progress += chunk.length;
+            const percentage = ((progress / fileSize) * 100).toFixed(2);
+            console.log(`Uploading... ${percentage}%`);
         });
 
         console.log('File berhasil diunggah. ID:', res.data.id);
@@ -57,6 +72,7 @@ async function uploadFile(key, files, DriveFolderID) {
         console.error('Error mengunggah file ke Google Drive:', error.message);
     }
 }
+
 
 
 
