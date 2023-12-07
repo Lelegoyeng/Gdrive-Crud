@@ -4,6 +4,8 @@ const Upload = require('./controller/upload');
 const downloadFile = require('./controller/download');
 const keys = require('./keys.json');
 const Delete = require('./controller/delete');
+const GetDownloadLink = require('./controller/getDownloadLink');
+
 // fuwa fuwa f1
 const DriveFolderID = '160UgtH6Q5-4QDNpASQO8MRv4LQtQ5EQZ';
 
@@ -18,6 +20,7 @@ inquirer
                 'Upload',
                 'Download',
                 'Delete',
+                'GetDownloadLink'
             ],
         },
     ])
@@ -50,6 +53,16 @@ inquirer
                 },
             ]);
             Delete(keys,fileId);
+        }
+        if(answers.action === 'GetDownloadLink') {
+            const { fileId } = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'fileId',
+                    message: 'Masukkan ID file untuk get Download Link:',
+                },
+            ]);
+            GetDownloadLink(keys,fileId);
         }
 
     })
