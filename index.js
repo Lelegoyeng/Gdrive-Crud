@@ -5,6 +5,7 @@ const downloadFile = require('./controller/download');
 const keys = require('./keys.json');
 const Delete = require('./controller/delete');
 const GetDownloadLink = require('./controller/getDownloadLink');
+const downloadFiles = require('./controller/download-files');
 
 // fuwa fuwa f1
 const DriveFolderID = '160UgtH6Q5-4QDNpASQO8MRv4LQtQ5EQZ';
@@ -20,7 +21,8 @@ inquirer
                 'Upload',
                 'Download',
                 'Delete',
-                'GetDownloadLink'
+                'GetDownloadLink',
+                'Downloader Files'
             ],
         },
     ])
@@ -44,7 +46,7 @@ inquirer
             downloadFile(keys, fileId);
         }
 
-        if(answers.action === 'Delete'){
+        if (answers.action === 'Delete') {
             const { fileId } = await inquirer.prompt([
                 {
                     type: 'input',
@@ -52,9 +54,9 @@ inquirer
                     message: 'Masukkan ID file yang ingin Anda Delete:',
                 },
             ]);
-            Delete(keys,fileId);
+            Delete(keys, fileId);
         }
-        if(answers.action === 'GetDownloadLink') {
+        if (answers.action === 'GetDownloadLink') {
             const { fileId } = await inquirer.prompt([
                 {
                     type: 'input',
@@ -62,7 +64,17 @@ inquirer
                     message: 'Masukkan ID file untuk get Download Link:',
                 },
             ]);
-            GetDownloadLink(keys,fileId);
+            GetDownloadLink(keys, fileId);
+        }
+        if (answers.action === 'Downloader Files') {
+            const { link } = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'link',
+                    message: 'Masukkan Download Link:',
+                },
+            ]);
+            downloadFiles(link)
         }
 
     })
