@@ -3,7 +3,9 @@ const listFiles = require('./controller/get');
 const Upload = require('./controller/upload');
 const downloadFile = require('./controller/download');
 const keys = require('./keys.json');
-const DriveFolderID = '16Afi0ml8TKMZK8oqgAtsKlinuhwNca40';
+const Delete = require('./controller/delete');
+// fuwa fuwa f1
+const DriveFolderID = '160UgtH6Q5-4QDNpASQO8MRv4LQtQ5EQZ';
 
 inquirer
     .prompt([
@@ -37,6 +39,17 @@ inquirer
                 },
             ]);
             downloadFile(keys, fileId);
+        }
+
+        if(answers.action === 'Delete'){
+            const { fileId } = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'fileId',
+                    message: 'Masukkan ID file yang ingin Anda Delete:',
+                },
+            ]);
+            Delete(keys,fileId);
         }
 
     })

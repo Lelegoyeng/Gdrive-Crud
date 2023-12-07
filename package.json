@@ -11,6 +11,7 @@
   "dependencies": {
     "googleapis": "^128.0.0",
     "inquirer": "^8.0.0",
-    "mongodb": "^6.2.0"
+    "mongodb": "^6.2.0",
+    "nodemon": "^3.0.2"
   }
 }
